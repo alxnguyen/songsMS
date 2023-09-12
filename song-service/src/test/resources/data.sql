@@ -1,0 +1,1 @@
+insert into songs (title, artist, label, released) values ("Title1", "Artist1", "Label1", 1999);
