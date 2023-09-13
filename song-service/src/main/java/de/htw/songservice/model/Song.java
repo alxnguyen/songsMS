@@ -18,4 +18,24 @@ public class Song {
     private String artist;
     private String label;
     private int released;
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Song otherSong)) {
+            return false;
+        }
+        if (!(this.id.equals(otherSong.id))) {
+            return false;
+        }
+        if (!(this.artist.equals(otherSong.artist))) {
+            return false;
+        }
+        if (!(this.title.equals(otherSong.title))) {
+            return false;
+        }
+        if (!(this.label.equals(otherSong.label))) {
+            return false;
+        }
+        return this.released == otherSong.released;
+    }
 }

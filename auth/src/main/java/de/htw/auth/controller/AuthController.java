@@ -24,4 +24,9 @@ public class AuthController {
     public Boolean checkToken(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         return authService.checkToken(token);
     }
+
+    @GetMapping(path = "/tokens", produces = MediaType.TEXT_PLAIN_VALUE)
+    public String getUserIdByToken(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        return authService.getUserIdByToken(token);
+    }
 }

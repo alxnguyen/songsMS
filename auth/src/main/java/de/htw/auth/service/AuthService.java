@@ -35,6 +35,12 @@ public class AuthService {
         return tokenRepository.existsById(token);
     }
 
+    public String getUserIdByToken(String tokenString) {
+        Token token = tokenRepository.findById(tokenString)
+                .orElseThrow(UnauthorizedException::new);
+        return token.getUserId();
+    }
+
     public ResponseEntity<String> verifyUser(UserRequest userRequest) {
         String token = generateToken(userRequest.getUserId(), userRequest.getPassword());
         return ResponseEntity.ok()

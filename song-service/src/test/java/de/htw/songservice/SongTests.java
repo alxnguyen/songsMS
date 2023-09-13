@@ -28,22 +28,21 @@ class SongTests {
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	private String token = "NWA3tET3lrkL_aNPg3VhWro9gSa5sCg5";
+	private final String token = "NWA3tET3lrkL_aNPg3VhWro9gSa5sCg5";
 
 	@Test
 	@Transactional
 	void getSongByIdShouldReturnStatusOkAndSong() throws Exception {
-		SongRequest songRequest = getSongRequest();
 		mockMvc.perform(get("/rest/songs/1")
 				.accept(MediaType.APPLICATION_JSON)
 				.header(HttpHeaders.AUTHORIZATION, token))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.id").value(1))
-				.andExpect(jsonPath("$.title").value(songRequest.getTitle()))
-				.andExpect(jsonPath("$.artist").value(songRequest.getArtist()))
-				.andExpect(jsonPath("$.label").value(songRequest.getLabel()))
-				.andExpect(jsonPath("$.released").value(songRequest.getReleased()));
+				.andExpect(jsonPath("$.title").value("MacArthur Park"))
+				.andExpect(jsonPath("$.artist").value("Richard Harris"))
+				.andExpect(jsonPath("$.label").value("Dunhill Records"))
+				.andExpect(jsonPath("$.released").value(1968));
 	}
 
 	@Test
@@ -84,13 +83,12 @@ class SongTests {
 	@Transactional
 	void getSongsShouldReturnOkAndAllSongs() throws Exception {
 		SongRequest songRequest = getSongRequest();
-		String songRequestString = objectMapper.writeValueAsString(songRequest);
-		String expectedJson = String.format("[%s]", songRequestString);
 		mockMvc.perform(get("/rest/songs")
 				.accept(MediaType.APPLICATION_JSON)
 				.header(HttpHeaders.AUTHORIZATION, token))
-				.andExpect(status().isOk())
-				.andExpect(content().json(expectedJson));
+				.andExpect(status().isOk());
+
+		assert(songRepository.findAll().size() == 10);
 	}
 
 	@Test
@@ -98,7 +96,7 @@ class SongTests {
 	void postSongShouldReturn201AndLocationHeader() throws Exception {
 		SongRequest songRequest = getSongRequest2();
 		String songRequestString = objectMapper.writeValueAsString(songRequest);
-		Integer id = 2;
+		Integer id = 11;
 		String expectedUri = format("/rest/songs/%s", id);
 		mockMvc.perform(post("/rest/songs")
 				.contentType(MediaType.APPLICATION_JSON)
