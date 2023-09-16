@@ -20,6 +20,7 @@ public class Songlist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String userId;
+    @Column(name = "songListName")
     private String name;
     private boolean isPrivate;
 
