@@ -20,7 +20,7 @@ import java.util.Optional;
 public class SonglistService {
     private final SonglistRepository songlistRepository;
     private final SongRepository songRepository;
-    private final WebClient webClient;
+    private final WebClient.Builder webClientBuilder;
 
     public ResponseEntity<Iterable<Songlist>> getSonglists(String token, String userId) {
         String tokenUserId = getUserIdByToken(token);
@@ -113,8 +113,8 @@ public class SonglistService {
     }
 
     private String getUserIdByToken(String token) {
-        return webClient.get()
-                .uri("http://localhost:8081/rest/auth/tokens")
+        return webClientBuilder.build().get()
+                .uri("http://auth-service/rest/auth/tokens")
                 .header("Authorization", token)
                 .retrieve()
                 .bodyToMono(String.class)

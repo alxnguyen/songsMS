@@ -18,7 +18,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Optional;
@@ -51,7 +50,7 @@ public class SonglistTests {
     private final String userId = "maxime";
 
     @BeforeEach
-    private void setupMockMvc() {
+    void setupMockMvc() {
         mockMvc = MockMvcBuilders.standaloneSetup(new SonglistController(songlistService)).build();
     }
 

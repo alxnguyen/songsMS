@@ -21,7 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SongService {
     private final SongRepository songRepository;
-    private final WebClient webClient;
+    private final WebClient.Builder webClientBuilder;
 
     public ResponseEntity<SongResponse> saveSong(SongRequest songRequest) throws URISyntaxException {
         Song song = songBuilder(songRequest);
@@ -93,8 +93,8 @@ public class SongService {
     }
 
     private void checkToken(String token) {
-        boolean authorized = Boolean.TRUE.equals(webClient.get()
-                .uri("http://localhost:8081/rest/auth")
+        boolean authorized = Boolean.TRUE.equals(webClientBuilder.build().get()
+                .uri("http://auth-service/rest/auth")
                 .header("Authorization", token)
                 .retrieve()
                 .bodyToMono(Boolean.class)
