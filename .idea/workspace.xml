@@ -5,34 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93414a62-5c37-410b-9c82-c885b27342f4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/auth/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/de/htw/auth/AuthApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/de/htw/auth/controller/AuthController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/de/htw/auth/dto/UserRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/de/htw/auth/dto/UserResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/de/htw/auth/exception/UnauthorizedException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/de/htw/auth/model/Token.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/de/htw/auth/model/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/de/htw/auth/repository/TokenRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/de/htw/auth/repository/UserRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/de/htw/auth/service/AuthService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/test/java/de/htw/auth/AuthTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/discovery-server/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-server/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/song-service/src/main/java/de/htw/songservice/SongServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/song-service/src/main/java/de/htw/songservice/SongServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/song-service/src/main/java/de/htw/songservice/controller/SongController.java" beforeDir="false" afterPath="$PROJECT_DIR$/song-service/src/main/java/de/htw/songservice/controller/SongController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/song-service/src/main/java/de/htw/songservice/controller/SonglistController.java" beforeDir="false" afterPath="$PROJECT_DIR$/song-service/src/main/java/de/htw/songservice/controller/SonglistController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/song-service/src/main/java/de/htw/songservice/service/SongService.java" beforeDir="false" afterPath="$PROJECT_DIR$/song-service/src/main/java/de/htw/songservice/service/SongService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/song-service/src/main/java/de/htw/songservice/service/SonglistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/song-service/src/main/java/de/htw/songservice/service/SonglistService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/song-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/song-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/song-service/src/test/java/de/htw/songservice/SongTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/song-service/src/test/java/de/htw/songservice/SongTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/song-service/src/test/java/de/htw/songservice/SonglistTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/song-service/src/test/java/de/htw/songservice/SonglistTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/song-service/src/test/resources/test.properties" beforeDir="false" afterPath="$PROJECT_DIR$/song-service/src/test/resources/test.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,15 +27,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "17",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Application.AuthApplication">
     <configuration name="ApiGatewayApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="de.htw.apigateway.ApiGatewayApplication" />
