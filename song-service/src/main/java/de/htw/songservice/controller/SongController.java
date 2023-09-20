@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URISyntaxException;
 
 @RestController
-@RequestMapping("/rest/songs")
+@RequestMapping("/rest/songs/songs")
 @RequiredArgsConstructor
 public class SongController {
     private final SongService songService;

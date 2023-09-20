@@ -22,13 +22,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Optional;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @TestPropertySource(locations = "/test.properties")
-@AutoConfigureMockMvc
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Slf4j
 public class SonglistTests {
     private static MockMvc mockMvc;
@@ -56,7 +53,6 @@ public class SonglistTests {
 
     @Test
     @Transactional
-    @Order(1)
     void putSonglistExpect201andSonglistInDatabase() throws Exception {
         String songlist = """
                 {
@@ -82,17 +78,15 @@ public class SonglistTests {
 
         Integer nextId = (int) songlistRepository.count() + 1;
 
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/rest/songlists")
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/rest/songs/songlists")
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .accept(MediaType.ALL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(songlist);
 
-        log.info("SIZES: {}, {}", songRepository.findAll().size(), songlistRepository.findAll().size());
-
         mockMvc.perform(request)
                 .andExpect(status().isCreated())
-                .andExpect(header().string("Location", String.format("/rest/songlists/%d", nextId)));
+                .andExpect(header().string("Location", String.format("/rest/songs/songlists/%d", nextId)));
 
         Optional<Songlist> savedSonglist = songlistRepository.findById(nextId);
         assert(savedSonglist.isPresent());
@@ -105,12 +99,12 @@ public class SonglistTests {
 
     @Test
     @Transactional
-    void putSonglistWithSongsNotInDatabaseExpect400() throws Exception {
+    void putSonglistForOtherPersonShouldReturnBadRequest() throws Exception {
         String songlist = """
                 {
-                "isPrivate": false,
-                "userId": "jane",
-                "name": "JanesPublic",
+                "isPrivate": true,
+                "userId":"maxime",
+                "name": "MaximesPrivate",
                 "songList": [
                         {
                             "id": 6,
@@ -129,10 +123,85 @@ public class SonglistTests {
                     ]
                 }""";
 
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/rest/songs/songlists")
+                .header(HttpHeaders.AUTHORIZATION, token2)
+                .accept(MediaType.ALL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(songlist);
+
+        mockMvc.perform(request)
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    void putSonglistWithSongIdNotInDatabaseExpect400() throws Exception {
+        String songlist = """
+                {
+                "isPrivate": false,
+                "name": "JanesPublic",
+                "songList": [
+                        {
+                            "id": 15,
+                            "title": "Achy Breaky Heart",
+                            "artist": "Billy Ray Cyrus",
+                            "label": "PolyGram Mercury",
+                            "released": 1992
+                        },
+                        {
+                            "id": 7,
+                            "title": "Whats Up?",
+                            "artist": "4 Non Blondes",
+                            "label": "Interscope",
+                            "released": 1993
+                        }
+                    ]
+                }""";
+
         Integer nextId = (int) songlistRepository.count() + 1;
 
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/rest/songlists")
-                .header(HttpHeaders.AUTHORIZATION, token)
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/rest/songs/songlists")
+                .header(HttpHeaders.AUTHORIZATION, token2)
+                .accept(MediaType.ALL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(songlist);
+
+        mockMvc.perform(request)
+                .andExpect(status().isBadRequest());
+
+        Optional<Songlist> savedSonglist = songlistRepository.findById(nextId);
+        assert(savedSonglist.isEmpty());
+    }
+
+    @Test
+    @Transactional
+    void putSonglistWithSongsNotInDatabaseExpect400() throws Exception {
+        String songlist = """
+                {
+                "isPrivate": false,
+                "name": "JanesPublic",
+                "songList": [
+                        {
+                            "id": 6,
+                            "title": "Achy Breaky Heart",
+                            "artist": "Billy Ray Cyrus",
+                            "label": "PolyGram Mercury",
+                            "released": 1992
+                        },
+                        {
+                            "id": 7,
+                            "title": "Whats Up?",
+                            "artist": "4 Non Blondessssssss",
+                            "label": "Interscope",
+                            "released": 1993
+                        }
+                    ]
+                }""";
+
+        Integer nextId = (int) songlistRepository.count() + 1;
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/rest/songs/songlists")
+                .header(HttpHeaders.AUTHORIZATION, token2)
                 .accept(MediaType.ALL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(songlist);
@@ -147,7 +216,7 @@ public class SonglistTests {
     @Test
     @Transactional
     void get1() throws Exception {
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get("/rest/songlists?userId=maxime")
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get("/rest/songs/songlists?userId=maxime")
                 .header(HttpHeaders.AUTHORIZATION, token);
         mockMvc.perform(request).andExpect(status().isOk());
     }
@@ -155,7 +224,7 @@ public class SonglistTests {
     @Test
     @Transactional
     void get2() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/rest/songlists/1")
+        mockMvc.perform(MockMvcRequestBuilders.get("/rest/songs/songlists/1")
                 .header(HttpHeaders.AUTHORIZATION, token))
                 .andExpect(status().isOk());
     }
@@ -163,7 +232,7 @@ public class SonglistTests {
     @Test
     @Transactional
     void get3() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/rest/songlists/1")
+        mockMvc.perform(MockMvcRequestBuilders.get("/rest/songs/songlists/1")
                         .header(HttpHeaders.AUTHORIZATION, token2))
                 .andExpect(status().isForbidden());
     }
@@ -171,9 +240,18 @@ public class SonglistTests {
     @Test
     @Transactional
     void get4() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/rest/songlists/2")
+        mockMvc.perform(MockMvcRequestBuilders.get("/rest/songs/songlists/2")
                         .header(HttpHeaders.AUTHORIZATION, token))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    @Transactional
+    void get5() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/rest/songs/songlists?userId=maxime")
+                .header(HttpHeaders.AUTHORIZATION, token2))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE));
     }
 
     @Test
@@ -181,7 +259,7 @@ public class SonglistTests {
     void deleteSonglistWithSonglistIdNotInDatabaseExpect404() throws Exception {
         Integer nextId = (int) songlistRepository.count() + 1;
 
-        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete(String.format("/rest/songlists/%d", nextId))
+        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete(String.format("/rest/songs/songlists/%d", nextId))
                 .header(HttpHeaders.AUTHORIZATION, token);
 
         mockMvc.perform(builder)
@@ -190,14 +268,13 @@ public class SonglistTests {
 
     @Test
     @Transactional
-    @Order(2)
     void deleteSonglistExpect200AndSonglistRemovedFromDatabase() throws Exception {
         Integer maximesSonglistId = 1;
         Optional<Songlist> maximesSonglist = songlistRepository.findById(maximesSonglistId);
         assert (maximesSonglist.isPresent());
         assert (maximesSonglist.get().getUserId().equals(userId));
 
-        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete(String.format("/rest/songlists/%s", maximesSonglistId))
+        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete(String.format("/rest/songs/songlists/%s", maximesSonglistId))
                 .header(HttpHeaders.AUTHORIZATION, token);
 
         mockMvc.perform(builder)
@@ -215,7 +292,7 @@ public class SonglistTests {
         assert (janesSonglist.isPresent());
         assert (!janesSonglist.get().getUserId().equals(userId));
 
-        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete(String.format("/rest/songlists/%d", janesSonglistId))
+        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete(String.format("/rest/songs/songlists/%d", janesSonglistId))
                 .header(HttpHeaders.AUTHORIZATION, token);
 
         mockMvc.perform(builder)
@@ -227,7 +304,7 @@ public class SonglistTests {
     @Test
     @Transactional
     void updateIdDoesNotExistShouldReturnNotFound() throws Exception {
-        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete(String.format("/rest/songlists/%d", 96))
+        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete(String.format("/rest/songs/songlists/%d", 96))
                 .header(HttpHeaders.AUTHORIZATION, token);
 
         mockMvc.perform(builder)
@@ -237,7 +314,7 @@ public class SonglistTests {
     @Test
     @Transactional
     void updateInvalidIdShouldReturnBadRequest() throws Exception {
-        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete(String.format("/rest/songlists/%s", "test"))
+        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete(String.format("/rest/songs/songlists/%s", "test"))
                 .header(HttpHeaders.AUTHORIZATION, token);
 
         mockMvc.perform(builder)
@@ -252,7 +329,7 @@ public class SonglistTests {
         assert (janesSonglist.isPresent());
         assert (!janesSonglist.get().getUserId().equals(userId));
 
-        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete(String.format("/rest/songlists/%d", janesSonglistId))
+        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete(String.format("/rest/songs/songlists/%d", janesSonglistId))
                 .header(HttpHeaders.AUTHORIZATION, token);
 
         mockMvc.perform(builder)
@@ -263,7 +340,6 @@ public class SonglistTests {
 
     @Test
     @Transactional
-    @Order(3)
     void updateSongSuccessfullyShouldReturn200AndUpdateSonglist() throws Exception {
         String new_songlist = """
                 {
@@ -287,7 +363,7 @@ public class SonglistTests {
                     ]
                 }""";
 
-        MockHttpServletRequestBuilder put_request = MockMvcRequestBuilders.put(String.format("/rest/songlists/%d", 1))
+        MockHttpServletRequestBuilder put_request = MockMvcRequestBuilders.put(String.format("/rest/songs/songlists/%d", 1))
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .accept(MediaType.ALL)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -303,5 +379,110 @@ public class SonglistTests {
         assert(savedSonglist.get().getName().equals("MaximesPrivate2"));
         assert(savedSonglist.get().isPrivate());
         assert(!savedSonglist.get().getSongs().isEmpty());
+    }
+
+    @Test
+    @Transactional
+    void updateSongNegativeSongIdShouldReturnBadRequest() throws Exception {
+        String new_songlist = """
+                {
+                "isPrivate": true,
+                "name": "MaximesPrivate2",
+                "songList": [
+                        {
+                            "id": 6,
+                            "title": "Achy Breaky Heart",
+                            "artist": "Billy Ray Cyrus",
+                            "label": "PolyGram Mercury",
+                            "released": 1992
+                        },
+                        {
+                            "id": 7,
+                            "title": "Whats Up?",
+                            "artist": "4 Non Blondes",
+                            "label": "Interscope",
+                            "released": 1993
+                        }
+                    ]
+                }""";
+
+        MockHttpServletRequestBuilder put_request = MockMvcRequestBuilders.put(String.format("/rest/songs/songlists/%d", -1))
+                .header(HttpHeaders.AUTHORIZATION, token)
+                .accept(MediaType.ALL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new_songlist);
+
+        mockMvc.perform(put_request)
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    void updateSongWrongSongIdShouldReturnNotFound() throws Exception {
+        String new_songlist = """
+                {
+                "isPrivate": true,
+                "name": "MaximesPrivate2",
+                "songList": [
+                        {
+                            "id": 6,
+                            "title": "Achy Breaky Heart",
+                            "artist": "Billy Ray Cyrus",
+                            "label": "PolyGram Mercury",
+                            "released": 1992
+                        },
+                        {
+                            "id": 7,
+                            "title": "Whats Up?",
+                            "artist": "4 Non Blondes",
+                            "label": "Interscope",
+                            "released": 1993
+                        }
+                    ]
+                }""";
+
+        MockHttpServletRequestBuilder put_request = MockMvcRequestBuilders.put(String.format("/rest/songs/songlists/%d", 25))
+                .header(HttpHeaders.AUTHORIZATION, token)
+                .accept(MediaType.ALL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new_songlist);
+
+        mockMvc.perform(put_request)
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @Transactional
+    void updateSongForOtherPersonShouldReturnForbidden() throws Exception {
+        String new_songlist = """
+                {
+                "isPrivate": true,
+                "name": "MaximesPrivate2",
+                "songList": [
+                        {
+                            "id": 6,
+                            "title": "Achy Breaky Heart",
+                            "artist": "Billy Ray Cyrus",
+                            "label": "PolyGram Mercury",
+                            "released": 1992
+                        },
+                        {
+                            "id": 7,
+                            "title": "Whats Up?",
+                            "artist": "4 Non Blondes",
+                            "label": "Interscope",
+                            "released": 1993
+                        }
+                    ]
+                }""";
+
+        MockHttpServletRequestBuilder put_request = MockMvcRequestBuilders.put(String.format("/rest/songs/songlists/%d", 1))
+                .header(HttpHeaders.AUTHORIZATION, token2)
+                .accept(MediaType.ALL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new_songlist);
+
+        mockMvc.perform(put_request)
+                .andExpect(status().isForbidden());
     }
 }

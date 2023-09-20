@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/rest/songlists")
+@RequestMapping("/rest/songs/songlists")
 @RequiredArgsConstructor
 public class SonglistController {
     private final SonglistService songlistService;

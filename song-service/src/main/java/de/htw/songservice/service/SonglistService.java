@@ -72,7 +72,7 @@ public class SonglistService {
         Songlist savedSonglist = songlistRepository.save(songlist);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .header(HttpHeaders.LOCATION, String.format("/rest/songlists/%s", savedSonglist.getId()))
+                .header(HttpHeaders.LOCATION, String.format("/rest/songs/songlists/%s", savedSonglist.getId()))
                 .build();
     }
 
@@ -108,7 +108,7 @@ public class SonglistService {
         songlistRepository.save(newSonglist);
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.LOCATION, String.format("/rest/songlists/%d", songlistId))
+                .header(HttpHeaders.LOCATION, String.format("/rest/songs/songlists/%d", songlistId))
                 .build();
     }
 

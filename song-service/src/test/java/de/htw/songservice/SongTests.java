@@ -22,7 +22,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 @TestPropertySource(locations = "/test.properties")
 class SongTests {
 	private MockMvc mockMvc;
@@ -46,7 +45,7 @@ class SongTests {
 	@Test
 	@Transactional
 	void getSongByIdShouldReturnStatusOkAndSong() throws Exception {
-		mockMvc.perform(get("/rest/songs/1")
+		mockMvc.perform(get("/rest/songs/songs/1")
 				.accept(MediaType.APPLICATION_JSON)
 				.header(HttpHeaders.AUTHORIZATION, token))
 				.andExpect(status().isOk())
@@ -61,14 +60,14 @@ class SongTests {
 	@Test
 	@Transactional
 	void getSongByIdShouldReturnBadRequestForIdNonInteger() throws Exception {
-		mockMvc.perform(get("/rest/songs/song"))
+		mockMvc.perform(get("/rest/songs/songs/song"))
 				.andExpect(status().isBadRequest());
 	}
 
 	@Test
 	@Transactional
 	void getSongByIdShouldReturn404ForNonExistingId() throws Exception {
-		mockMvc.perform(get("/rest/songs/15")
+		mockMvc.perform(get("/rest/songs/songs/15")
 				.accept(MediaType.APPLICATION_JSON)
 				.header(HttpHeaders.AUTHORIZATION, token))
 				.andExpect(status().isNotFound());
@@ -77,7 +76,7 @@ class SongTests {
 	@Test
 	@Transactional
 	void getSongByIdWrongAcceptHeaderShouldReturnBadRequest() throws Exception {
-		mockMvc.perform(get("/rest/songs/1")
+		mockMvc.perform(get("/rest/songs/songs/1")
 				.accept(MediaType.TEXT_HTML)
 				.header(HttpHeaders.AUTHORIZATION, token))
 				.andExpect(status().isNotAcceptable());
@@ -86,7 +85,7 @@ class SongTests {
 	@Test
 	@Transactional
 	void getSongsWrongAcceptHeaderShouldReturnBadRequest() throws Exception {
-		mockMvc.perform(get("/rest/songs")
+		mockMvc.perform(get("/rest/songs/songs")
 				.accept(MediaType.APPLICATION_XML)
 				.header(HttpHeaders.AUTHORIZATION, token))
 				.andExpect(status().isNotAcceptable());
@@ -96,7 +95,7 @@ class SongTests {
 	@Transactional
 	void getSongsShouldReturnOkAndAllSongs() throws Exception {
 		SongRequest songRequest = getSongRequest();
-		mockMvc.perform(get("/rest/songs")
+		mockMvc.perform(get("/rest/songs/songs")
 				.accept(MediaType.APPLICATION_JSON)
 				.header(HttpHeaders.AUTHORIZATION, token))
 				.andExpect(status().isOk());
@@ -110,8 +109,8 @@ class SongTests {
 		SongRequest songRequest = getSongRequest2();
 		String songRequestString = objectMapper.writeValueAsString(songRequest);
 		Integer id = 11;
-		String expectedUri = format("/rest/songs/%s", id);
-		mockMvc.perform(post("/rest/songs")
+		String expectedUri = format("/rest/songs/songs/%s", id);
+		mockMvc.perform(post("/rest/songs/songs")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(songRequestString)
 				.header(HttpHeaders.AUTHORIZATION, token))
@@ -123,7 +122,7 @@ class SongTests {
 	@Transactional
 	void postSongWrongContentTypeShouldReturnBadRequest() throws Exception {
 		String songRequestString = getWrongContentType();
-		mockMvc.perform(post("/rest/songs")
+		mockMvc.perform(post("/rest/songs/songs")
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.content(songRequestString)
 				.header(HttpHeaders.AUTHORIZATION, token))
@@ -135,7 +134,7 @@ class SongTests {
 	void postSongWithIncorrectFieldsShouldReturnBadRequest() throws Exception {
 		String songToUpdate = incorrectField();
 
-		mockMvc.perform(post("/rest/songs")
+		mockMvc.perform(post("/rest/songs/songs")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(songToUpdate)
@@ -149,7 +148,7 @@ class SongTests {
 		SongRequest songRequest = getSongRequest2();
 		String songRequestString = objectMapper.writeValueAsString(songRequest);
 
-		mockMvc.perform(put("/rest/songs/1")
+		mockMvc.perform(put("/rest/songs/songs/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(songRequestString)
@@ -163,7 +162,7 @@ class SongTests {
 		SongRequest songRequest = getSongRequest2();
 		String songRequestString = objectMapper.writeValueAsString(songRequest);
 
-		mockMvc.perform(put("/rest/songs/15")
+		mockMvc.perform(put("/rest/songs/songs/15")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(songRequestString)
@@ -177,7 +176,7 @@ class SongTests {
 		SongRequest songRequest = getSongRequest2();
 		String songRequestString = objectMapper.writeValueAsString(songRequest);
 
-		mockMvc.perform(put("/rest/songs/song1")
+		mockMvc.perform(put("/rest/songs/songs/song1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(songRequestString)
@@ -191,7 +190,7 @@ class SongTests {
 		SongRequest songRequest = getSongRequest2();
 		String songRequestString = objectMapper.writeValueAsString(songRequest);
 
-		mockMvc.perform(put("/rest/songs/1")
+		mockMvc.perform(put("/rest/songs/songs/1")
 				.contentType(MediaType.APPLICATION_XML_VALUE)
 				.content(songRequestString)
 				.header(HttpHeaders.AUTHORIZATION, token))
@@ -209,7 +208,7 @@ class SongTests {
 				"<title>Chinese Food</title>" +
 				"</song>";
 
-		mockMvc.perform(put("/rest/songs/1")
+		mockMvc.perform(put("/rest/songs/songs/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
 				.content(songToUpdate)
@@ -220,14 +219,14 @@ class SongTests {
 	@Test
 	@Transactional
 	void deleteSongWithPathVariableIdNotIntegerShouldReturnBadRequest() throws Exception {
-		mockMvc.perform(delete("/rest/songs/song1"))
+		mockMvc.perform(delete("/rest/songs/songs/song1"))
 				.andExpect(status().isMethodNotAllowed());
 	}
 
 	@Test
 	@Transactional
 	void deleteSongWithIdNotInDatabaseShouldReturnNotFound() throws Exception {
-		mockMvc.perform(delete("/rest/songs/15")
+		mockMvc.perform(delete("/rest/songs/songs/15")
 				.header(HttpHeaders.AUTHORIZATION, token))
 				.andExpect(status().isMethodNotAllowed());
 	}
@@ -235,7 +234,7 @@ class SongTests {
 	@Test
 	@Transactional
 	void deleteSongShouldReturnNoContentAndRemoveSongFromRepository() throws Exception {
-		mockMvc.perform(delete("/rest/songs/1")
+		mockMvc.perform(delete("/rest/songs/songs/1")
 				.header(HttpHeaders.AUTHORIZATION, token))
 				.andExpect(status().isMethodNotAllowed());
 	}

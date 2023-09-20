@@ -23,13 +23,6 @@ public class SongService {
     private final SongRepository songRepository;
     private final WebClient.Builder webClientBuilder;
 
-    public ResponseEntity<SongResponse> saveSong(SongRequest songRequest) throws URISyntaxException {
-        Song song = songBuilder(songRequest);
-        Song savedSong = songRepository.save(song);
-        URI songURI = new URI(String.format("/rest/songs/%d", savedSong.getId()));
-        return ResponseEntity.created(songURI).build();
-    }
-
     public ResponseEntity<Iterable<SongResponse>> getSongs(String token) {
         checkToken(token);
         Iterable<SongResponse> songs = songRepository.findAll().stream().map(this::mapToSongResponse).toList();
@@ -56,7 +49,7 @@ public class SongService {
         Song songToSave = songBuilder(songRequest);
         Song savedSong = songRepository.save(songToSave);
 
-        URI songURI = new URI(String.format("/rest/songs/%d", savedSong.getId()));
+        URI songURI = new URI(String.format("/rest/songs/songs/%d", savedSong.getId()));
         return ResponseEntity.created(songURI).build();
     }
 

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="93414a62-5c37-410b-9c82-c885b27342f4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/auth/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/src/main/java/de/htw/auth/AuthApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/src/main/java/de/htw/auth/controller/AuthController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/src/main/java/de/htw/auth/dto/UserRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/src/main/java/de/htw/auth/dto/UserResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/src/main/java/de/htw/auth/exception/UnauthorizedException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/src/main/java/de/htw/auth/model/Token.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/src/main/java/de/htw/auth/model/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/src/main/java/de/htw/auth/repository/TokenRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/src/main/java/de/htw/auth/repository/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/src/main/java/de/htw/auth/service/AuthService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/src/test/java/de/htw/auth/AuthTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/discovery-server/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-server/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/song-service/src/main/java/de/htw/songservice/SongServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/song-service/src/main/java/de/htw/songservice/SongServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/song-service/src/main/java/de/htw/songservice/controller/SongController.java" beforeDir="false" afterPath="$PROJECT_DIR$/song-service/src/main/java/de/htw/songservice/controller/SongController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/song-service/src/main/java/de/htw/songservice/controller/SonglistController.java" beforeDir="false" afterPath="$PROJECT_DIR$/song-service/src/main/java/de/htw/songservice/controller/SonglistController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/song-service/src/main/java/de/htw/songservice/service/SongService.java" beforeDir="false" afterPath="$PROJECT_DIR$/song-service/src/main/java/de/htw/songservice/service/SongService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/song-service/src/main/java/de/htw/songservice/service/SonglistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/song-service/src/main/java/de/htw/songservice/service/SonglistService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/song-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/song-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/song-service/src/test/java/de/htw/songservice/SongTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/song-service/src/test/java/de/htw/songservice/SongTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/song-service/src/test/java/de/htw/songservice/SonglistTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/song-service/src/test/java/de/htw/songservice/SonglistTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/song-service/src/test/resources/test.properties" beforeDir="false" afterPath="$PROJECT_DIR$/song-service/src/test/resources/test.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2Va0HGtjBwRAQSsIXbL6yFFTOsj" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Application.AuthApplication">
+    <configuration name="ApiGatewayApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="de.htw.apigateway.ApiGatewayApplication" />
+      <module name="api-gateway" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="de.htw.apigateway.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="de.htw.auth.AuthApplication" />
+      <module name="auth" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="de.htw.auth.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DiscoveryServerApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="de.htw.discoveryserver.DiscoveryServerApplication" />
+      <module name="discovery-server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="de.htw.discoveryserver.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="java in song-service" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="song-service" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/song-service/src/test/java" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="songservice in song-service" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="song-service" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/song-service/src/test/java/de/htw/songservice" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.AuthApplication" />
+        <item itemvalue="Application.DiscoveryServerApplication" />
+        <item itemvalue="Application.ApiGatewayApplication" />
+        <item itemvalue="JUnit.songservice in song-service" />
+        <item itemvalue="JUnit.java in song-service" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="93414a62-5c37-410b-9c82-c885b27342f4" name="Changes" comment="" />
+      <created>1695058793765</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1695058793765</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/songsMS$songservice_in_song_service.ic" NAME="songservice in song-service Coverage Results" MODIFIED="1695222694161" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/songsMS$AuthTests.ic" NAME="AuthTests Coverage Results" MODIFIED="1695219177320" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>de.htw.auth.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/songsMS$java_in_song_service.ic" NAME="java in song-service Coverage Results" MODIFIED="1695223924168" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>
