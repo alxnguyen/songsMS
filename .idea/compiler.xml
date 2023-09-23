@@ -11,6 +11,7 @@
         <module name="discovery-server" />
         <module name="song-service" />
         <module name="auth" />
+        <module name="custom-microservice" />
       </profile>
     </annotationProcessing>
   </component>
@@ -18,6 +19,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api-gateway" options="-parameters" />
       <module name="auth" options="-parameters" />
+      <module name="custom-microservice" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="song-service" options="-parameters" />
     </option>

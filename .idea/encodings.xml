@@ -5,8 +5,11 @@
     <file url="file://$PROJECT_DIR$/api-gateway/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/auth-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/auth-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/custom-microservice/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/discovery-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/discovery-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/song-service/custom-microservice/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/song-service/custom-microservice/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/song-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/song-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
