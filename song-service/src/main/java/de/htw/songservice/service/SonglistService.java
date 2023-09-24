@@ -20,10 +20,10 @@ import java.util.Optional;
 public class SonglistService {
     private final SonglistRepository songlistRepository;
     private final SongRepository songRepository;
-    private final WebClient.Builder webClientBuilder;
+    private final WebService webService;
 
     public ResponseEntity<Iterable<Songlist>> getSonglists(String token, String userId) {
-        String tokenUserId = getUserIdByToken(token);
+        String tokenUserId = webService.getUserIdByToken(token);
 
         Iterable<Songlist> songlists;
         if(!userId.equals(tokenUserId)) {
@@ -40,7 +40,7 @@ public class SonglistService {
         if(songList.isEmpty()) return ResponseEntity.notFound().build();
 
         String songListUserId = songList.get().getUserId();
-        String userId = getUserIdByToken(token);
+        String userId = webService.getUserIdByToken(token);
         if(!songListUserId.equals(userId)) {
             if(songList.get().isPrivate()) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -50,7 +50,7 @@ public class SonglistService {
     }
 
     public ResponseEntity<Songlist> putSonglist(String token, Songlist songlist) {
-        String tokenUserId = getUserIdByToken(token);
+        String tokenUserId = webService.getUserIdByToken(token);
         if(songlist.getUserId() != null) {
             if(!songlist.getUserId().equals(tokenUserId)) {
                 throw new BadRequestException("Cannot post a song list for another user.");
@@ -82,7 +82,7 @@ public class SonglistService {
         if(songlist.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        String tokenUserId = getUserIdByToken(token);
+        String tokenUserId = webService.getUserIdByToken(token);
         if(!songlist.get().getUserId().equals(tokenUserId)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
@@ -92,7 +92,7 @@ public class SonglistService {
     }
 
     public ResponseEntity<Songlist> updateSonglist(String token, Integer songlistId, Songlist newSonglist) {
-        String tokenUserId = getUserIdByToken(token);
+        String tokenUserId = webService.getUserIdByToken(token);
         if(songlistId <= 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -110,14 +110,5 @@ public class SonglistService {
         return ResponseEntity.ok()
                 .header(HttpHeaders.LOCATION, String.format("/rest/songs/songlists/%d", songlistId))
                 .build();
-    }
-
-    private String getUserIdByToken(String token) {
-        return webClientBuilder.build().get()
-                .uri("http://auth-service/rest/auth/tokens")
-                .header("Authorization", token)
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
     }
 }

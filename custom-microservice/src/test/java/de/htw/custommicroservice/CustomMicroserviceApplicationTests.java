@@ -2,15 +2,21 @@ package de.htw.custommicroservice;
 
 import de.htw.custommicroservice.controller.MyController;
 import de.htw.custommicroservice.service.MyService;
+import de.htw.custommicroservice.service.WebService;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -18,18 +24,33 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class CustomMicroserviceApplicationTests {
 	private MockMvc mockMvc;
 
-	@Autowired
 	private MyService myService;
+
+	@Mock
+	private WebService webService;
 
 	private final String token = "NWA3tET3lrkL_aNPg3VhWro9gSa5sCg5";
 
 	@BeforeEach
 	void setupMockMvc() {
+		myService = new MyService(webService);
 		mockMvc = MockMvcBuilders.standaloneSetup(new MyController(myService)).build();
 	}
 
 	@Test
 	void getSuccessfulLyrics() throws Exception {
+		String songJson = """
+				{
+					"id": 1,
+					"title": "Achy Breaky Heart",
+					"artist": "Billy Ray Cyrus",
+					"label": "PolyGram Mercury",
+					"released": 1992
+				}""";
+
+		doNothing().when(webService).checkToken(anyString());
+		when(webService.getSongFromDB(anyInt(), anyString())).thenReturn(new JSONObject(songJson));
+
 		String expectedLyrics = """
 				[Verse 1]
 				You can tell the world you never was my girl

@@ -6,10 +6,12 @@ import de.htw.songservice.model.Songlist;
 import de.htw.songservice.repository.SongRepository;
 import de.htw.songservice.repository.SonglistRepository;
 import de.htw.songservice.service.SonglistService;
+import de.htw.songservice.service.WebService;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +24,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -36,8 +41,10 @@ public class SonglistTests {
     @Autowired
     SonglistRepository songlistRepository;
 
-    @Autowired
     private SonglistService songlistService;
+
+    @Mock
+    private WebService webService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -45,10 +52,15 @@ public class SonglistTests {
     private final String token = "NWA3tET3lrkL_aNPg3VhWro9gSa5sCg5";
     private final String token2 = "Os8phiVel5bPvbvDkC7UB4Pro11DnLHE";
     private final String userId = "maxime";
+    private final String userId2 = "jane";
 
     @BeforeEach
     void setupMockMvc() {
+        songlistService = new SonglistService(songlistRepository, songRepository, webService);
         mockMvc = MockMvcBuilders.standaloneSetup(new SonglistController(songlistService)).build();
+        doNothing().when(webService).checkToken(anyString());
+        when(webService.getUserIdByToken(token)).thenReturn(userId);
+        when(webService.getUserIdByToken(token2)).thenReturn(userId2);
     }
 
     @Test

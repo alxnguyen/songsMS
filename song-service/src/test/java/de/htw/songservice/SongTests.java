@@ -5,9 +5,12 @@ import de.htw.songservice.controller.SongController;
 import de.htw.songservice.dto.SongRequest;
 import de.htw.songservice.repository.SongRepository;
 import de.htw.songservice.service.SongService;
+import de.htw.songservice.service.WebService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static java.lang.String.format;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -32,14 +37,18 @@ class SongTests {
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	@Autowired
 	private SongService songService;
+
+	@Mock
+	private WebService webService;
 
 	private final String token = "NWA3tET3lrkL_aNPg3VhWro9gSa5sCg5";
 
 	@BeforeEach
 	private void setupMockMvc() {
+		songService = new SongService(songRepository, webService);
 		mockMvc = MockMvcBuilders.standaloneSetup(new SongController(songService)).build();
+		doNothing().when(webService).checkToken(anyString());
 	}
 
 	@Test

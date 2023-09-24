@@ -21,16 +21,16 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SongService {
     private final SongRepository songRepository;
-    private final WebClient.Builder webClientBuilder;
+    private final WebService webService;
 
     public ResponseEntity<Iterable<SongResponse>> getSongs(String token) {
-        checkToken(token);
+        webService.checkToken(token);
         Iterable<SongResponse> songs = songRepository.findAll().stream().map(this::mapToSongResponse).toList();
         return new ResponseEntity<>(songs, HttpStatus.OK);
     }
 
     public ResponseEntity<SongResponse> getSong(Integer id, String token) {
-        checkToken(token);
+        webService.checkToken(token);
         Optional<Song> song = songRepository.findById(id);
         if(song.isPresent()) {
             SongResponse response = mapToSongResponse(song.get());
@@ -42,7 +42,7 @@ public class SongService {
     }
 
     public ResponseEntity<SongResponse> saveSong(SongRequest songRequest, String token) throws URISyntaxException {
-        checkToken(token);
+        webService.checkToken(token);
         if(songRequest.getTitle() == null || songRequest.getArtist() == null || songRequest.getLabel() == null) {
             throw new BadRequestException("Song needs to have a title, artist, and label.");
         }
@@ -54,7 +54,7 @@ public class SongService {
     }
 
     public ResponseEntity<SongResponse> updateSong(Integer id, SongRequest songRequest, String token) {
-        checkToken(token);
+        webService.checkToken(token);
         Song song = songRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Song", "id", id));
         Song songToSave = songBuilder(songRequest);
@@ -83,15 +83,5 @@ public class SongService {
                 .label(songRequest.getLabel())
                 .released(songRequest.getReleased())
                 .build();
-    }
-
-    private void checkToken(String token) {
-        boolean authorized = Boolean.TRUE.equals(webClientBuilder.build().get()
-                .uri("http://auth-service/rest/auth")
-                .header("Authorization", token)
-                .retrieve()
-                .bodyToMono(Boolean.class)
-                .block());
-        if(!authorized) throw new UnauthorizedException();
     }
 }
