@@ -4,7 +4,6 @@ import de.htw.songservice.dto.SongRequest;
 import de.htw.songservice.dto.SongResponse;
 import de.htw.songservice.service.SongService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

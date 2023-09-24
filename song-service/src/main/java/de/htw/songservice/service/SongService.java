@@ -4,14 +4,12 @@ import de.htw.songservice.dto.SongRequest;
 import de.htw.songservice.dto.SongResponse;
 import de.htw.songservice.exception.BadRequestException;
 import de.htw.songservice.exception.ResourceNotFoundException;
-import de.htw.songservice.exception.UnauthorizedException;
 import de.htw.songservice.model.Song;
 import de.htw.songservice.repository.SongRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.net.URI;
 import java.net.URISyntaxException;

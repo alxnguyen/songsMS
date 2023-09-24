@@ -1,14 +1,11 @@
 package de.htw.auth.service;
 
 import de.htw.auth.dto.UserRequest;
-import de.htw.auth.dto.UserResponse;
 import de.htw.auth.exception.UnauthorizedException;
 import de.htw.auth.model.Token;
-import de.htw.auth.model.User;
 import de.htw.auth.repository.TokenRepository;
 import de.htw.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
