@@ -35,6 +35,7 @@ class CustomMicroserviceApplicationTests {
 	void setupMockMvc() {
 		myService = new MyService(webService);
 		mockMvc = MockMvcBuilders.standaloneSetup(new MyController(myService)).build();
+		doNothing().when(webService).checkToken(anyString());
 	}
 
 	@Test
@@ -48,7 +49,6 @@ class CustomMicroserviceApplicationTests {
 					"released": 1992
 				}""";
 
-		doNothing().when(webService).checkToken(anyString());
 		when(webService.getSongFromDB(anyInt(), anyString())).thenReturn(new JSONObject(songJson));
 
 		String expectedLyrics = """
@@ -101,5 +101,22 @@ class CustomMicroserviceApplicationTests {
 				.header(HttpHeaders.AUTHORIZATION, token))
 				.andExpect(status().isOk())
 				.andExpect(content().string(expectedLyrics));
+	}
+
+	@Test
+	void searchInvalidSong() throws Exception {
+		String songJson = """
+				{
+					"id": 1,
+					"title": "asasasasasasasassa",
+					"artist": "Billy Ray Cyrus",
+					"label": "PolyGram Mercury",
+					"released": 1992
+				}""";
+
+		when(webService.getSongFromDB(anyInt(), anyString())).thenReturn(new JSONObject(songJson));
+		mockMvc.perform(MockMvcRequestBuilders.get("/rest/myservice/1")
+				.header(HttpHeaders.AUTHORIZATION, token))
+				.andExpect(status().isBadRequest());
 	}
 }

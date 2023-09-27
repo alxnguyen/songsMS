@@ -1,6 +1,7 @@
 package de.htw.custommicroservice.service;
 
 import core.GLA;
+import de.htw.custommicroservice.exception.BadRequestException;
 import genius.SongSearch;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ public class MyService {
     private String fetchLyrics(String artist, String title) throws IOException {
         GLA gla = new GLA();
         SongSearch search = gla.search(artist + " - " + title);
+        if(search.getHits().isEmpty()) throw new BadRequestException("Song doesn't exist in the database.");
         SongSearch.Hit hit = search.getHits().get(0);
         return hit.fetchLyrics();
     }
